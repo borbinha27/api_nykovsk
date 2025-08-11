@@ -3,7 +3,8 @@ import dataRoutes from "./routers/router.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-
+const cors = require('cors');
+app.use(cors());
 
 //Middleware para analisar o corpo das requisições JSON
 app.use(express.json());
