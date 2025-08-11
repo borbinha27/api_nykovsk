@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Consulta API</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
 </head>
+
 <body>
     <div class="container mt-5">
         <div class="row justify-content-center">
@@ -27,27 +29,36 @@
 
     <script>
         // URL da sua API - substitua pela URL real
-        const API_URL ="http://localhost:3000/users/1";
-        
+        const API_CONFIG = {
+            url: "http://localhost:3000/api/users/1", // URL COMPLETA
+            options: {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+        };
+
         // Função para carregar os dados
         async function loadData() {
             try {
                 const response = await fetch(API_URL);
                 const data = await response.json();
-                
+
                 // Preencher os campos do card
                 document.getElementById('userId').textContent = data.id || 'N/A';
                 document.getElementById('userName').textContent = data.name || data.nome || 'N/A';
                 document.getElementById('userAge').textContent = data.idade || '25'; // Campo simulado
                 document.getElementById('userProfession').textContent = data.profissao || data.company?.name || 'N/A';
-                
+
             } catch (error) {
                 console.error('Erro ao carregar dados:', error);
             }
         }
-        
+
         // Carregar dados quando a página carregar
         loadData();
     </script>
 </body>
+
 </html>
