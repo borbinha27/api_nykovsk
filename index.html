@@ -28,9 +28,8 @@
     </div>
 
     <script>
-        // URL da sua API - substitua pela URL real
         const API_CONFIG = {
-            url: "http://localhost:3000/api/users/1", // URL COMPLETA
+            url: "http://localhost:3000",
             options: {
                 method: 'GET',
                 headers: {
@@ -39,16 +38,14 @@
             }
         };
 
-        // Função para carregar os dados
         async function loadData() {
             try {
                 const response = await fetch(API_URL);
                 const data = await response.json();
 
-                // Preencher os campos do card
                 document.getElementById('userId').textContent = data.id || 'N/A';
                 document.getElementById('userName').textContent = data.name || data.nome || 'N/A';
-                document.getElementById('userAge').textContent = data.idade || '25'; // Campo simulado
+                document.getElementById('userAge').textContent = data.idade || 'N/A';
                 document.getElementById('userProfession').textContent = data.profissao || data.company?.name || 'N/A';
 
             } catch (error) {
@@ -56,7 +53,6 @@
             }
         }
 
-        // Carregar dados quando a página carregar
         loadData();
     </script>
 </body>
