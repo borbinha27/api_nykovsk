@@ -1,7 +1,11 @@
 import express from "express";
 import dataRoutes from "./routers/router.js";
-import cors from "cors";
+// import cors from "cors";
+import {fileURLToPath} from "url";
+import dataRoutes from "./routers/router.js"
 
+const __filename = fileURLToPath(import.meta.url);
+const 
 const app = express();
 const PORT = process.env.PORT || 3000;
 app.use(cors());
