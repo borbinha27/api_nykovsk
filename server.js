@@ -10,8 +10,7 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 
-// Se você quiser servir arquivos estáticos, descomente a linha abaixo:
-// app.use(express.static(join(__dirname, 'public')));
+app.use(express.static(join(__dirname, 'public')));
 
 app.use("/", dataRoutes);
 

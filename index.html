@@ -46,7 +46,7 @@
                 document.getElementById('userId').textContent = data.id || 'N/A';
                 document.getElementById('userName').textContent = data.name || data.nome || 'N/A';
                 document.getElementById('userAge').textContent = data.idade || 'N/A';
-                document.getElementById('userProfession').textContent = data.profissao || data.company?.name || 'N/A';
+                document.getElementById('userProfession').textContent = data.profissao || 'N/A';
 
             } catch (error) {
                 console.error('Erro ao carregar dados:', error);
