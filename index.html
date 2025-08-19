@@ -16,11 +16,31 @@
                     <div class="card-header text-center">
                         <h5>Dados do Usuário</h5>
                     </div>
+                    <div class="card-body" id="dados-container">
+                        <p>Carregando...</p>
+                    </div>
+                </div>
+
+                <div class="card mt-4">
+                    <div class="card-header">
+                        <h6>Adicionar Novo Usuário</h6>
+                    </div>
                     <div class="card-body">
-                        <p><strong>ID:</strong> <span id="userId">-</span></p>
-                        <p><strong>Nome:</strong> <span id="userName">-</span></p>
-                        <p><strong>Idade:</strong> <span id="userAge">-</span></p>
-                        <p><strong>Profissão:</strong> <span id="userProfession">-</span></p>
+                        <form id="userForm">
+                            <div class="mb-3">
+                                <label for="nome" class="form-label">Nome:</label>
+                                <input type="text" class="form-control" id="nome" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="idade" class="form-label">Idade:</label>
+                                <input type="number" class="form-control" id="idade" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="profissao" class="form-label">Profissão:</label>
+                                <input type="text" class="form-control" id="profissao" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Adicionar Usuário</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -28,30 +48,54 @@
     </div>
 
     <script>
-        const API_CONFIG = {
-            url: "http://localhost:3000",
-            options: {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }
-        };
+        const API_URL = "http://localhost:3000";
 
         async function loadData() {
-            try {
-                const response = await fetch(API_URL);
-                const data = await response.json();
+            const response = await fetch(API_URL);
+            const data = await response.json();
 
-                document.getElementById('userId').textContent = data.id || 'N/A';
-                document.getElementById('userName').textContent = data.name || data.nome || 'N/A';
-                document.getElementById('userAge').textContent = data.idade || 'N/A';
-                document.getElementById('userProfession').textContent = data.profissao || 'N/A';
+            let html = '';
+            data.forEach(usuario => {
+                html += `
+                    <div class="mb-3 p-3 border rounded">
+                        <p><strong>ID:</strong> ${usuario._id}</p>
+                        <p><strong>Nome:</strong> ${usuario.nome}</p>
+                        <p><strong>Idade:</strong> ${usuario.idade}</p>
+                        <p><strong>Profissão:</strong> ${usuario.profissao}</p>
+                    </div>
+                `;
+            });
 
-            } catch (error) {
-                console.error('Erro ao carregar dados:', error);
+            document.getElementById('dados-container').innerHTML = html;
+        }
+
+        async function addUser(userData) {
+            const response = await fetch(`${API_URL}/usuario`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(userData)
+            });
+
+            if (response.ok) {
+                loadData();
+                document.getElementById('userForm').reset();
+                alert('Usuário adicionado com sucesso!');
             }
         }
+
+        document.getElementById('userForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const formData = {
+                nome: document.getElementById('nome').value,
+                idade: parseInt(document.getElementById('idade').value),
+                profissao: document.getElementById('profissao').value
+            };
+            
+            addUser(formData);
+        });
 
         loadData();
     </script>
