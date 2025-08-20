@@ -25,9 +25,10 @@ app.use((req, res, next) => {
     }
 });
 
+app.use("/", dataRoutes);
 app.use(express.static(join(__dirname, '.')));
 
-app.use("/", dataRoutes);
+
 
 app.listen(PORT, () => {
     console.log(`Servidor rodando na porta ${PORT}`);
